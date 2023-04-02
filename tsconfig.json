@@ -22,7 +22,6 @@
     "types": [
       "webpack-env",
       "mocha",
-      "chai"
     ],
     "paths": {},
     "lib": [

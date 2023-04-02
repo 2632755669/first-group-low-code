@@ -18,6 +18,16 @@
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "isolatedModules": true,
+    "types": [
+      "webpack-env",
+      "mocha",
+      "react",
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "noEmit": true,
     "jsx": "react-jsx"
   },
