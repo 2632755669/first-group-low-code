@@ -40,5 +40,8 @@
     "@commitlint/config-conventional": "^17.4.4",
     "husky": "^8.0.3",
     "lerna": "^6.6.1"
+  },
+  "devDependencies": {
+    "lint-staged": "^13.2.0"
   }
 }
