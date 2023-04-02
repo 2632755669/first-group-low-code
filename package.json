@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "precommit": "yarn workspaces foreach run precommit"
   },
   "workspaces": [
     "packages/*"
@@ -37,6 +38,7 @@
   "dependencies": {
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
+    "husky": "^8.0.3",
     "lerna": "^6.6.1"
   }
 }
