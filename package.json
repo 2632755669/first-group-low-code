@@ -1,0 +1,42 @@
+{
+  "name": "first-group-low-code",
+  "version": "1.0.0",
+  "private": true,
+  "description": "this is a platform about large screen construction, it's mostly a practice program.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,jsx,tsx,json,css,less,scss,html,md}": [
+      "prettier --write -l",
+      "git add"
+    ],
+    "(app)/**/*.{js,jsx,ts,tsx}": "eslint",
+    "(app)/**/*.(less|scss)": "stylelint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2632755669/first-group-low-code.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2632755669/first-group-low-code/issues"
+  },
+  "homepage": "https://github.com/2632755669/first-group-low-code#readme",
+  "dependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "lerna": "^6.6.1"
+  }
+}
