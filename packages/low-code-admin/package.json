@@ -22,8 +22,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "yarn run lint:script && yarn run lint:style && yarn run prettier",
-    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx,.vue .",
-    "lint:style": "stylelint **/*.{less,vue}",
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx, .",
+    "lint:style": "stylelint **/*.{less,vue} --no-error-on-unmatched-pattern",
     "lint-fix": "yarn run lint-fix:script && yarn run lint-fix:style && yarn run prettier:fix",
     "lint-fix:script": "npm run lint:script -- --fix",
     "lint-fix:style": "npm run lint:style -- --fix",
@@ -47,5 +47,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "typescript": "*"
   }
 }
