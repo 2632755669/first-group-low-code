@@ -21,7 +21,6 @@
     "strictPropertyInitialization": false,
     "types": [
       "webpack-env",
-      "mocha",
     ],
     "paths": {},
     "lib": [

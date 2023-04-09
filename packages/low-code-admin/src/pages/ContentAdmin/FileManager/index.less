@@ -1,0 +1,72 @@
+.LD-file-manager {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .LD-file-manager-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 2px;
+    .LD-file-manager-header-left {
+      display: flex;
+      .LD-file-manager-header-left-item {
+        margin-right: 24px;
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 500;
+        transition: color 0.3s;
+        cursor: pointer;
+        &-active {
+          color: #1791ff;
+        }
+      }
+    }
+    .LD-file-manager-header-center {
+      display: flex;
+      padding: 0;
+      .LD-file-manager-header-center-input {
+        width: 300px;
+        overflow: hidden;
+        font-size: 14px;
+        height: 40px;
+        
+      }
+      .LD-file-manager-header-center-button {
+        border-radius: 0;
+        border:1px solid #d9d9d9;
+        border-left: none;
+        color:d9d9d9;
+        font-size: 18px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+      }
+    }
+    .LD-file-manager-header-right {
+      height: 40px;
+    }
+  }
+  .LD-file-manager-content {
+    background-color: rgba(255, 255, 255, 0.781);
+    margin-top: 16px;
+    border-radius: 2px;
+    padding: 16px;
+    .LD-file-manager-content-list {
+      height: 69vh;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      overflow: auto;
+      gap: 16px;
+      padding-bottom: 18px;
+      margin-right: -1%;
+    }
+    .LD-file-manager-content-page {
+      padding: 10px;
+      text-align: right;
+    }
+  }
+}

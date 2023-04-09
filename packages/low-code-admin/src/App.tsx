@@ -1,12 +1,11 @@
-import './App.css'
-import './test.less'
+import './App.less';
+
+import IndexApp from './home/index';
 
 function App() {
   return (
-    <div className="App">
-      111
-    </div>
-  )
+    <IndexApp />
+  );
 }
 
-export default App
+export default App;
