@@ -2,16 +2,16 @@
 import { useRoutes, type RouteObject, Navigate } from 'react-router-dom'
 import { dealRoutes } from './utils'
 import type { IRoute } from './types'
-import Index from '../pages/Index'
+import { Index } from '../pages/Index'
 import NotFound from '../pages/NotFound'
 
 const routes: IRoute[] = [
   {
     path: '',
-    element: <Navigate to="index" replace />
+    element: <Navigate to="/index" replace />
   },
   {
-    path: '/',
+    path: '/index',
     element: <Index />
   },
   {
