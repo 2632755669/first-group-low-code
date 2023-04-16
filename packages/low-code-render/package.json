@@ -1,0 +1,72 @@
+{
+  "name": "low-code-render",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/pro-components": "^2.4.4",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/core-js": "^2.5.5",
+    "@types/jest": "^27.5.2",
+    "@types/mockjs": "^1.0.7",
+    "@types/node": "^16.18.23",
+    "@types/react": "^18.0.31",
+    "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
+    "antd": "^5.3.3",
+    "core-js": "^3.29.1",
+    "customize-cra": "^1.0.0",
+    "mockjs": "^1.1.0",
+    "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
+    "react-scripts": "5.0.1",
+    "react-use": "^17.4.0",
+    "styled-components": "^5.3.9",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "lint": "yarn run lint:script && yarn run lint:style && yarn run prettier",
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx, .",
+    "lint:style": "stylelint **/*.{less,vue} --no-error-on-unmatched-pattern",
+    "lint-fix": "yarn run lint-fix:script && yarn run lint-fix:style && yarn run prettier:fix",
+    "lint-fix:script": "npm run lint:script -- --fix",
+    "lint-fix:style": "npm run lint:style -- --fix",
+    "prettier": "prettier -c \"./src/**/*\"",
+    "prettier:fix": "prettier --write -l \"./src/**/*\""
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "typescript": "*"
+  }
+}

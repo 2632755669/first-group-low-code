@@ -1,0 +1,71 @@
+{
+  "name": "first-group-low-code",
+  "version": "1.0.0",
+  "private": true,
+  "description": "this is a platform about large screen construction, it's mostly a practice program.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "precommit": "yarn workspaces foreach run precommit",
+    "lint": "yarn run lint:script",
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx, .",
+    "lint-fix": "yarn run lint-fix:script && yarn run prettier:fix",
+    "lint-fix-foreach": "yarn run lint-fix:script && yarn run lint-fix:style && yarn run prettier:fix",
+    "lint-fix:script": "npm run lint:script -- --fix",
+    "lint-fix:style": "npm run lint:style -- --fix",
+    "prettier": "prettier -c \"**/*\"",
+    "prettier:fix": "prettier --write -l \"**/*\"",
+    "commit": "git add . && git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,jsx,tsx,json,css,less,scss,html,md}": [
+      "prettier --write -l",
+      "git add"
+    ],
+    "(app)/**/*.{js,jsx,ts,tsx}": "eslint",
+    "(app)/**/*.(less|scss)": "stylelint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2632755669/first-group-low-code.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2632755669/first-group-low-code/issues"
+  },
+  "homepage": "https://github.com/2632755669/first-group-low-code#readme",
+  "dependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "^8.37.0",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
+    "lerna": "^6.6.1"
+  },
+  "devDependencies": {
+    "@commitlint/cz-commitlint": "^17.5.0",
+    "commitizen": "^4.3.0",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "px2rem-loader": "0.1.9",
+    "stylelint": "^15.4.0"
+  }
+}
