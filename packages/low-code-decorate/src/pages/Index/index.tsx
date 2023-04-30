@@ -1,14 +1,13 @@
 // import { useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import PageHeader from '../../components/PageHeader';
 import { LeftMenu } from './components/LeftMenu';
 import { RightProperty } from './components/RightProperty';
 import CenterCanvas  from './components/CenterCanvas/editor';
-import React, { useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import {componentList} from './load'
 import {curComponentConText} from '@/contexts/componentList'
 import curComponentReducer, {initialCurComponent} from '@/reducers/curComponentReducer'
-import { ComponentObj } from '@/types/basicStore';
 console.log(componentList)
 const { Header, Content, Sider } = Layout;
 

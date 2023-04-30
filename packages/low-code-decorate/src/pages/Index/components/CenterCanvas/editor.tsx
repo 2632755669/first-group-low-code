@@ -1,4 +1,4 @@
-import { type FC, Suspense, useContext, useReducer, useState, useEffect } from "react"
+import { type FC, Suspense, useContext, useReducer, useState } from "react"
 import { componentList } from "@/pages/Index/load"
 import './style/editor.css'
 import { ComponentInfo } from "@/clazz/style"
@@ -16,14 +16,9 @@ const CenterCanvas:FC<Props> = ({name}) => {
 
   const removeCurComponent = (e: React.MouseEvent)=> {
     if(!shuldRemove) return
-    console.log('删除curComponent', e.currentTarget, e.target)
     curDispath({type: 'remove', payload: null})
     setShuldRemove(false)
   }
-  // useEffect(()=> {
-  //   console.log('curComponent变了！')
-  //   dispatch({type: 'refresh', payload: 'refresh'})
-  // }, [curComponent])
   /**
    * desc 从左侧组件列表拖拽至编辑器区域的事件
   */
@@ -47,7 +42,6 @@ const CenterCanvas:FC<Props> = ({name}) => {
       const y = e.pageY - EditorRectInfo.top
       instance.style.setPos({left: x, top: y})
       const component = {...listItem, instance}
-      console.log(component, x,y)
       dispatch({type: 'appendComponent', payload: component})
     }
   }

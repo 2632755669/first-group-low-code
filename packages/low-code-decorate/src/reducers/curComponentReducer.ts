@@ -28,7 +28,7 @@ export default (state: ComponentObj|null, action: { type: string, payload: any }
 
 function changeCurComponentStyle(state: ComponentObj, payload: any) {
     console.log(state)
-    if(payload.type == 'font'){
+    if(payload.type === 'font'){
     state!.instance!.style.setFont(payload)
 
     }else{

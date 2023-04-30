@@ -1,7 +1,6 @@
 import { curComponentConText } from "@/contexts/componentList"
-import React, { type FC, Suspense, useContext, JSXElementConstructor, ReactNode, useMemo, useState, useEffect } from "react"
+import React, { type FC, useContext, ReactNode, useMemo, useState, useEffect } from "react"
 import './shape.less'
-import { StyleItem } from "@/clazz/type"
 import { ComponentObj } from "@/types/basicStore"
 interface Props {
   id: string
@@ -53,7 +52,6 @@ const CenterCanvas:FC<Props> = ({id, children, styles, component}) => {
     const move = (e: MouseEvent)=> {
       const left = e.clientX - startX + parseInt(styleResource.left as string) + 'px'
       const top = e.clientY - startY + parseInt(styleResource.top as string) + 'px'
-      console.log('movemovemovemovemove', left, top)
       setStyle({
         ...style,
         // @ts-ignore
@@ -72,7 +70,6 @@ const CenterCanvas:FC<Props> = ({id, children, styles, component}) => {
     const up = ()=> {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
-      console.log({left: style.left.slice(0,-2), top: style.top.slice(0,-2)})
       if(isDrag) {
         dispatch({ type: 'changeCurComponentStyle', payload:{left: endLeft.slice(0,-2), top: endTop.slice(0,-2)}})
       }
@@ -87,7 +84,6 @@ const CenterCanvas:FC<Props> = ({id, children, styles, component}) => {
    * desc 设置当前组件为选中组件
   */
   const setCurComponent = (e: React.MouseEvent)=> {
-    console.log('setCurComponentsetCurComponentsetCurComponent')
     e.stopPropagation()
     e.preventDefault()
     if(curComponent && curComponent.instance!.id === component.instance!.id) return

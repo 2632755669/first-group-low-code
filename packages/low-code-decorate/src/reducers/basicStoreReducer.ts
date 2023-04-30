@@ -1,6 +1,5 @@
 
-import { ComponentInfo } from '@/clazz/style';
-import { ComponentObj, BasicStore } from '@/types/basicStore';
+import { BasicStore } from '@/types/basicStore';
 
 export const initialBasicStore = []
 

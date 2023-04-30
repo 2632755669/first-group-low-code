@@ -171,10 +171,10 @@ class Attr {
   }
 
   get val() {
-    return (this.attrs.basicAttr.find(item => item.style == "input")?.val || "") as string
+    return (this.attrs.basicAttr.find(item => item.style === "input")?.val || "") as string
   }
   set val(val: string | number) {
-    const item = this.attrs.basicAttr.find(item => item.style == "input")
+    const item = this.attrs.basicAttr.find(item => item.style === "input")
     if (item)
       item.val = val;
   }
