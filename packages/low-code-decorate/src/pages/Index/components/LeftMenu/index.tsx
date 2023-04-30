@@ -1,5 +1,8 @@
 
-
+import ComponentList from './slideBar/componentList'
 export const LeftMenu = () => {
-  return <div>左侧菜单栏</div>
+
+  return <div>
+    <ComponentList></ComponentList>
+  </div>
 }

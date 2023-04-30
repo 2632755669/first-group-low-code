@@ -1,5 +1,5 @@
 const path = require('path');
-
+const CracoLessPlugin = require("craco-less");
 module.exports = {
   // ...
   webpack: {
@@ -15,5 +15,5 @@ module.exports = {
       ],
     },
   },
-
+  plugins: [{ plugin: CracoLessPlugin }],
 }

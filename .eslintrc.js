@@ -33,10 +33,7 @@ module.exports = {
       'tab',
       // 'space',
     ],
-    'linebreak-style': [
-      'error',
-      'unix'
-    ],
+    'linebreak-style': ['off', 'window'],
     'quotes': [
       'error',
       'single'
