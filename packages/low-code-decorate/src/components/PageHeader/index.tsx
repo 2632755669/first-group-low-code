@@ -1,8 +1,11 @@
-
-
-export const PageHeader = () => {
+import './index.css'
+// console.log(xtyle)
+const PageHeader = () => {
 
   return (
-    <div >11</div>
+    <div className="PageHeader">
+      PageHeader111
+    </div>
   )
 }
+export default PageHeader
