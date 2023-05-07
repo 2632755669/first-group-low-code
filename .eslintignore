@@ -1,4 +1,7 @@
 bin
 dist
+*./config.js
+*.json
+tsconfig.json
 node_modules
 .eslintrc.js

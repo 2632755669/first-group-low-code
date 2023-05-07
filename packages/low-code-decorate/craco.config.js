@@ -1,5 +1,5 @@
 const path = require('path');
-const CracoLessPlugin = require("craco-less");
+const CracoLessPlugin = require('craco-less');
 module.exports = {
   // ...
   webpack: {
@@ -7,13 +7,14 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
     }
   },
-  style: {
-    postcss: {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
+  plugins: [{
+    plugin: CracoLessPlugin,
+    options: {
+      lessLoaderOptions: {
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+      },
     },
-  },
-  plugins: [{ plugin: CracoLessPlugin }],
+  }],
 }

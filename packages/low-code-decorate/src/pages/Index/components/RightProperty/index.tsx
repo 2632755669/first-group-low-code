@@ -1,5 +1,5 @@
 
-import {  Tabs } from 'antd';
+import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { getStyle } from './style/tabStyle';
 import l from "./index.less"
@@ -23,11 +23,11 @@ const items: TabsProps['items'] = [
     label: `属性`,
     children: getAttr(),
   },
-  {
-    key: '3',
-    label: `Tab 3`,
-    children: `Content of Tab Pane 3`,
-  },
+  // {
+  //   key: '3',
+  //   label: `Tab 3`,
+  //   children: `Content of Tab Pane 3`,
+  // },
 ];
 
 const onChange = (key: string) => {
@@ -39,6 +39,7 @@ export const RightProperty = () => {
 
 
   return <div>
+    <div className='pl-2 py-6'>属性设置</div>
     {
       curComponent ? <Tabs className='custom-tab' defaultActiveKey="1" items={items} onChange={onChange}></Tabs> : null
 
