@@ -4,5 +4,5 @@ export const databaseConfig: PoolOptions = {
   host: '101.35.250.201',
   user: 'root',
   password: '5201314..',
-  database: 'test',
+  database: 'lowcode',
 };

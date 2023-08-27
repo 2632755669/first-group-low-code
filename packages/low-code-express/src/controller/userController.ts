@@ -1,7 +1,5 @@
-import express from 'express';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mysql from 'mysql2/promise';
-import bodyParser from 'body-parser';
-import cors from 'cors';
 import { createUserService } from '../service/userService';
 
 interface User {
@@ -12,39 +10,36 @@ interface User {
   email: string;
 }
 
-export function createUserController(connection: mysql.Pool) {
-  const app = express();
+export function userController(app: any, connection: mysql.Pool) {
 
-  app.use(bodyParser.json());
-  app.use(cors());
   const userService = createUserService(connection);
 
-  app.get('/users', async (req, res) => {
+  app.get('/users', async (req: any, res: any) => {
     console.log('123');
     const users = await userService.getAllUsers();
     res.json(users);
   });
 
-  app.get('/users/:id', async (req, res) => {
+  app.get('/users/:id', async (req: any, res: any) => {
     const id = parseInt(req.params.id, 10);
     const user = await userService.getUserById(id);
     res.json(user);
   });
 
-  app.post('/users', async (req, res) => {
+  app.post('/users', async (req: any, res: any) => {
     const user = req.body as User;
     await userService.createUser(user);
     res.json({ message: 'User created' });
   });
 
-  app.put('/users/:id', async (req, res) => {
+  app.put('/users/:id', async (req: any, res: any) => {
     const id = parseInt(req.params.id, 10);
     const user = req.body as User;
     await userService.updateUser(id, user);
     res.json({ message: 'User updated' });
   });
 
-  app.delete('/users/:id', async (req, res) => {
+  app.delete('/users/:id', async (req: any, res: any) => {
     const id = parseInt(req.params.id, 10);
     await userService.deleteUser(id);
     res.json({ message: 'User deleted' });
