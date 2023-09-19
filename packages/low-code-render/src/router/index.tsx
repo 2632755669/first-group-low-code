@@ -10,7 +10,7 @@ const routes: IRoute[] = [
     element: <Navigate to="index" replace />
   },
   {
-    path: '/',
+    path: '/index',
     element: <Index />
   },
   {
