@@ -1,68 +1,62 @@
 
+import { useRef, useCallback, useMemo } from 'react';
 import {ComponentGroupList} from '@/enums'
 import {componentList} from '@/pages/Index/load'
-import { EditOutlined, CodepenOutlined } from '@ant-design/icons';
 import { Menu, type MenuProps } from 'antd'
+import { componentOptions } from '../data'
+import { useDrag } from 'ahooks'
 type MenuItem = Required<MenuProps>['items'][number]
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group',
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
+
+interface IMenuItemDragLabelProps {
+  label: string;
+  componentId: string;
 }
 
-const handleDragStart = (e: any) => {
-	// console.log(e)
-  e.dataTransfer!.setData('componentName', e.target!.dataset.component)
+const MenuItemDragLabel = (props: IMenuItemDragLabelProps) => {
+  const { label, componentId } = props
+  const labelRef = useRef(null)
+
+  const handleDragStart = useCallback((e: React.DragEvent) => {
+    e.dataTransfer!.setData('componentid',  componentId) 
+  }, [componentId])
+
+  useDrag('', labelRef, {
+    onDragStart: handleDragStart
+  })
+  return <div ref={labelRef} data-componentid={componentId} draggable>{ label}</div>
 }
 
-const items: MenuProps['items'] = [
-	getItem('基本', 'sub1', <CodepenOutlined />, [
-		getItem(<div draggable="true" 
-		data-component={componentList.StaticText.componentName} 
-		onDragStart={handleDragStart}>
-			静态文本
-		</div>, '1')
-	]),	
-	{ type: 'divider' },
-	getItem('文本', 'sub2', <EditOutlined />, [
-		getItem(<div >静态文本</div>, '9'),
-		getItem('Option 10', '10'),
-		getItem('Option 11', '11'),
-		getItem('Option 12', '12'),
-	]),
-];
 
-// 遍历动态生成左侧组件列表
-// Object.keys(componentList).forEach( item => {
+const MenuList = () => {
 	
-// });
+  const items = useMemo<MenuProps['items']>(() => {
+    const options = componentOptions.reduce((pre: MenuItem[], item) => {
+      const menuSubs = (item.children || []).map(menuSub => {
+        return {
+          label: <MenuItemDragLabel label={menuSub.label} componentId={menuSub.key} />,
+          key: menuSub.key,
+        }
+      })
+      pre.push({
+        label: item.label,
+        key: item.key,
+        icon: item.icon,
+        children: menuSubs,
+        type: item.type
+      })
+      return pre
+    }, []) 
+    return options
+  }, [])
 
-
-
-const ComponentList = () => {
-	
-	const onClick: MenuProps['onClick'] = (e) => {
-		// console.log('click ', e);
-	};
   return (<Menu
 		theme={'dark'}
-    onClick={onClick}
     style={{ width: '100%' }}
-    defaultSelectedKeys={['1']}
-    defaultOpenKeys={['sub1']}
+    defaultSelectedKeys={[componentOptions[0].children![0].key]}
+    defaultOpenKeys={[componentOptions[0].key]}
     mode="inline"
     items={items}
   />)
 }
 
-export default ComponentList
+export default MenuList

@@ -1,51 +1,54 @@
-import { type FC, Suspense, useContext, useReducer, useState } from "react"
-import { componentList } from "@/pages/Index/load"
+import { type FC, Suspense, useContext, useReducer, useState, useRef } from "react"
+import { components, IComponentData } from '@/componentConfig'
+import { ComponentNameEnum } from '@/componentConfig/enum'
 import './style/editor.css'
-import { ComponentInfo } from "@/clazz/style"
 import Shape from './shape/shape'
-import basicStoreReducer, { initialBasicStore } from "@/reducers/basicStoreReducer"
 import { curComponentConText } from "@/contexts/componentList"
 import { Button, Space } from 'antd';
+import { useDrop } from 'ahooks';
 import React from "react"
 interface Props {
   name: string
 }
 const CenterCanvas: FC<Props> = ({ name }) => {
   const { curComponent, dispatch: curDispath } = useContext(curComponentConText)
-  const [basicStore, dispatch] = useReducer(basicStoreReducer, initialBasicStore)
   const [shuldRemove, setShuldRemove] = useState(false)
+  const [currentComponents, setCurrentComponent] = useState<IComponentData[]>([])
+  const editorRef = useRef(null);
 
   const removeCurComponent = (e: React.MouseEvent) => {
     if (!shuldRemove) return
     curDispath({ type: 'remove', payload: null })
     setShuldRemove(false)
   }
-  /**
-   * desc 从左侧组件列表拖拽至编辑器区域的事件
-  */
-  const handleDragOver = (e: any) => {
-    e.preventDefault()
+
+  const handleDragOver = (e: React.DragEvent<Element> | undefined): void => {
+    if (!e) return
     e.dataTransfer.dropEffect = 'copy'
   }
-  /**
-   * desc 从左侧组件列表拖拽至编辑器区域动作完成
-  */
-  const handleDrop = async (e: any) => {
-    e.preventDefault()
+
+  const handleDrop = (e: React.DragEvent<Element> | undefined): void => {
+    if (!e) return
     e.stopPropagation()
-    const componentName = e.dataTransfer.getData('componentName')
-    // return 
-    if (componentName) {
-      const listItem = componentList[componentName]
-      const instance: ComponentInfo = new listItem.config()
-      const EditorRectInfo = document.getElementById('editor')!.getBoundingClientRect()
-      const x = e.pageX - EditorRectInfo.left
-      const y = e.pageY - EditorRectInfo.top
-      instance.style.setPos({ left: x, top: y })
-      const component = { ...listItem, instance }
-      dispatch({ type: 'appendComponent', payload: component })
+    const componentName = e.dataTransfer.getData('componentid') as ComponentNameEnum
+    if (!componentName)  return
+    const componentData = components[componentName]
+    const editorRect = document.getElementById('editor')!.getBoundingClientRect()
+    const coordinate = {
+      x: e.pageX - editorRect.left,
+      y: e.pageY - editorRect.top
     }
+    setCurrentComponent((v) => {
+      console.log([...v, componentData])
+      return [...v, componentData]
+    })
   }
+
+  useDrop(editorRef, {
+    onDragOver: handleDragOver,
+    onDrop: handleDrop
+  })
+
   return (
     <section className="h-full">
       <div className="flex justify-center items-center h-[69px] centercanvas-toolbar">
@@ -54,7 +57,7 @@ const CenterCanvas: FC<Props> = ({ name }) => {
           <Button>预览</Button>
         </Space>
       </div>
-      <div id="editor" className="editor"
+      <div id="editor" ref={editorRef} className="editor"
         onMouseDown={() => { setShuldRemove(true) }}
         onMouseUp={removeCurComponent}
         onDrop={handleDrop}
@@ -66,14 +69,14 @@ const CenterCanvas: FC<Props> = ({ name }) => {
 
         {/* 操作台组件列表 */}
         <div className="componentsList">
-          {basicStore.map((item, index) => <Suspense key={item.instance!.id} fallback={<div>Loading...</div>}>
-            <Shape
-              id={item.instance!.id}
-              component={item}
-              styles={item.instance!.style.allStyles}>
-              <item.component ></item.component>
-            </Shape>
-          </Suspense>)}
+          {currentComponents.map((item, index) => {
+            return (
+              <Suspense key={item.title} fallback={<div>Loading...</div>}>
+                <item.component ></item.component>
+              </Suspense>
+            )
+          })
+        }
         </div>
       </div>
     </section>

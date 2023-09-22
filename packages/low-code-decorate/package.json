@@ -14,6 +14,7 @@
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
+    "ahooks": "^3.7.8",
     "antd": "^5.4.2",
     "core-js": "^3.29.1",
     "craco-less": "^2.0.0",

@@ -58,7 +58,8 @@
     "eslint": "^8.37.0",
     "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.3",
-    "lerna": "^6.6.1"
+    "lerna": "^6.6.1",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@commitlint/cz-commitlint": "^17.5.0",

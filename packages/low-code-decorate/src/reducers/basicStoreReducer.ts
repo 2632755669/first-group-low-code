@@ -3,7 +3,7 @@ import { BasicStore } from '@/types/basicStore';
 
 export const initialBasicStore = []
 
-export default (state: BasicStore, action: { type: string, payload: any }) => {
+const basicStoreReducer = (state: BasicStore, action: { type: string, payload: any }) => {
     const { type, payload } = action
     switch (type) {
         case 'appendComponent':
@@ -15,6 +15,8 @@ export default (state: BasicStore, action: { type: string, payload: any }) => {
             return state
     }
 }
+
+export default basicStoreReducer
 
 /**
  * desc 添加组件
