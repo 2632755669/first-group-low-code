@@ -37,8 +37,9 @@ export const staticTextConfig = {
 
 export interface IComponentData {
   title: string;
-  component: any
-  propertiesForm: IStaticTextSettingsForm
+  component: React.FC<any>;
+  propertiesForm: IStaticTextSettingsForm;
+  children?: IComponentData[]
 }
 
 export const components: Record<ComponentNameEnum, IComponentData> = {
@@ -53,3 +54,28 @@ export const components: Record<ComponentNameEnum, IComponentData> = {
     propertiesForm: StaticTextSettingsForm
   },
 }
+
+export const defaultComponents:IComponentData[] = [
+  {
+    title: 'flex布局',
+    component: DisplayContainer,
+    propertiesForm: StaticTextSettingsForm,
+    children: [
+      {
+        title: '文本',
+        component: Text,
+        propertiesForm: StaticTextSettingsForm
+     },
+      {
+        title: '文本',
+        component: Text,
+        propertiesForm: StaticTextSettingsForm
+     },
+      {
+        title: '文本',
+        component: Text,
+        propertiesForm: StaticTextSettingsForm
+     },
+    ]
+  },
+]

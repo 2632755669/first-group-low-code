@@ -1,19 +1,51 @@
-import { type FC, Suspense, useContext, useReducer, useState, useRef } from "react"
-import { components, IComponentData } from '@/componentConfig'
+import { type FC, Suspense, useContext, useReducer, useState, useRef, } from "react"
+import { components, IComponentData, defaultComponents } from '@/componentConfig'
 import { ComponentNameEnum } from '@/componentConfig/enum'
 import './style/editor.css'
 import Shape from './shape/shape'
 import { curComponentConText } from "@/contexts/componentList"
+import { ModuleContainer } from '@/coreComponents/ModuleContainer'
 import { Button, Space } from 'antd';
 import { useDrop } from 'ahooks';
 import React from "react"
-interface Props {
+
+interface IModuleComponent {
+  data: IComponentData;
+  activeId: React.Key;
+  onSelectChange(id: React.Key): void;
+}
+
+const ModuleComponent = (props: IModuleComponent) => {
+  const { data, activeId, onSelectChange } = props;
+
+  return (
+    <ModuleContainer activeId={activeId} onSelect={onSelectChange}>
+      <data.component >
+        {
+          data.children?.map((item, index) => {
+            return (
+              <ModuleComponent
+                key={index}
+                data={item}
+                activeId={activeId}
+                onSelectChange={onSelectChange}
+              /> 
+           )
+          })
+        }  
+      </data.component>
+  </ModuleContainer>
+  )
+}
+
+interface IProps {
   name: string
 }
-const CenterCanvas: FC<Props> = ({ name }) => {
+const CenterCanvas: FC<IProps> = ({ name }) => {
   const { curComponent, dispatch: curDispath } = useContext(curComponentConText)
   const [shuldRemove, setShuldRemove] = useState(false)
-  const [currentComponents, setCurrentComponent] = useState<IComponentData[]>([])
+  const [currentComponents, setCurrentComponent] = useState<IComponentData[]>(defaultComponents)
+  const [activeId, setActiveId] = useState<React.Key>('');
   const editorRef = useRef(null);
 
   const removeCurComponent = (e: React.MouseEvent) => {
@@ -44,6 +76,10 @@ const CenterCanvas: FC<Props> = ({ name }) => {
     })
   }
 
+  const handleSelectChange = (id: React.Key) => {
+    setActiveId(id)
+  }
+
   useDrop(editorRef, {
     onDragOver: handleDragOver,
     onDrop: handleDrop
@@ -71,8 +107,12 @@ const CenterCanvas: FC<Props> = ({ name }) => {
         <div className="componentsList">
           {currentComponents.map((item, index) => {
             return (
-              <Suspense key={item.title} fallback={<div>Loading...</div>}>
-                <item.component ></item.component>
+              <Suspense key={index} fallback={<div>Loading...</div>}>
+                <ModuleComponent
+                  data={item}
+                  activeId={activeId}
+                  onSelectChange={handleSelectChange}
+                />
               </Suspense>
             )
           })
