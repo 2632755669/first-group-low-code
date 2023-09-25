@@ -1,3 +1,4 @@
+export * from './component'
 export class GroupType {
     public name: string
     public icon: string

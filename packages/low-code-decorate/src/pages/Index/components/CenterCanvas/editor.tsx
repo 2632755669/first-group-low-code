@@ -1,33 +1,36 @@
-import { type FC, Suspense, useContext, useReducer, useState, useRef, } from "react"
-import { components, IComponentData, defaultComponents } from '@/componentConfig'
-import { ComponentNameEnum } from '@/componentConfig/enum'
-import './style/editor.css'
-import Shape from './shape/shape'
-import { curComponentConText } from "@/contexts/componentList"
+import { type FC, Suspense, useState, useRef, useMemo, } from "react"
 import { ModuleContainer } from '@/coreComponents/ModuleContainer'
 import { Button, Space } from 'antd';
 import { useDrop } from 'ahooks';
-import React from "react"
+import { useComponentContext } from '@/hooks/useComponentContext'
+import type { IComponentComposeData } from '@/types';
+import type { ComponentNameEnum } from '@/config/components'
+
+import './style/editor.css'
 
 interface IModuleComponent {
-  data: IComponentData;
+  data: IComponentComposeData;
   activeId: React.Key;
   onSelectChange(id: React.Key): void;
+  parentIds: string[];
 }
 
 const ModuleComponent = (props: IModuleComponent) => {
-  const { data, activeId, onSelectChange } = props;
+  const { data, activeId, onSelectChange, parentIds } = props;
+
+  const childParentIds = useMemo(() => [...parentIds, data.id], [parentIds, data])
 
   return (
-    <ModuleContainer activeId={activeId} onSelect={onSelectChange}>
+    <ModuleContainer activeId={activeId} id={data.id} parentIds={childParentIds} onSelect={onSelectChange}>
       <data.component >
         {
           data.children?.map((item, index) => {
             return (
               <ModuleComponent
-                key={index}
+                key={item.id}
                 data={item}
                 activeId={activeId}
+                parentIds={childParentIds}
                 onSelectChange={onSelectChange}
               /> 
            )
@@ -42,17 +45,9 @@ interface IProps {
   name: string
 }
 const CenterCanvas: FC<IProps> = ({ name }) => {
-  const { curComponent, dispatch: curDispath } = useContext(curComponentConText)
-  const [shuldRemove, setShuldRemove] = useState(false)
-  const [currentComponents, setCurrentComponent] = useState<IComponentData[]>(defaultComponents)
   const [activeId, setActiveId] = useState<React.Key>('');
+  const { components, setComponents } = useComponentContext();
   const editorRef = useRef(null);
-
-  const removeCurComponent = (e: React.MouseEvent) => {
-    if (!shuldRemove) return
-    curDispath({ type: 'remove', payload: null })
-    setShuldRemove(false)
-  }
 
   const handleDragOver = (e: React.DragEvent<Element> | undefined): void => {
     if (!e) return
@@ -64,16 +59,12 @@ const CenterCanvas: FC<IProps> = ({ name }) => {
     e.stopPropagation()
     const componentName = e.dataTransfer.getData('componentid') as ComponentNameEnum
     if (!componentName)  return
-    const componentData = components[componentName]
+    setComponents(componentName)
     const editorRect = document.getElementById('editor')!.getBoundingClientRect()
     const coordinate = {
       x: e.pageX - editorRect.left,
       y: e.pageY - editorRect.top
     }
-    setCurrentComponent((v) => {
-      console.log([...v, componentData])
-      return [...v, componentData]
-    })
   }
 
   const handleSelectChange = (id: React.Key) => {
@@ -94,8 +85,6 @@ const CenterCanvas: FC<IProps> = ({ name }) => {
         </Space>
       </div>
       <div id="editor" ref={editorRef} className="editor"
-        onMouseDown={() => { setShuldRemove(true) }}
-        onMouseUp={removeCurComponent}
         onDrop={handleDrop}
         onDragOver={handleDragOver}>
         {/* 网格线 */}
@@ -105,11 +94,12 @@ const CenterCanvas: FC<IProps> = ({ name }) => {
 
         {/* 操作台组件列表 */}
         <div className="componentsList">
-          {currentComponents.map((item, index) => {
+          {components.map((item, index) => {
             return (
               <Suspense key={index} fallback={<div>Loading...</div>}>
                 <ModuleComponent
                   data={item}
+                  parentIds={[]}
                   activeId={activeId}
                   onSelectChange={handleSelectChange}
                 />

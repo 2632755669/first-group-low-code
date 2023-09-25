@@ -4,17 +4,22 @@ import PageHeader from '../../components/PageHeader';
 import { LeftMenu } from './components/LeftMenu';
 import { RightProperty } from './components/RightProperty';
 import CenterCanvas from './components/CenterCanvas/editor';
-import { useReducer } from 'react';
+import { useReducer, } from 'react';
 import { componentList } from './load'
 import { curComponentConText } from '@/contexts/componentList'
 import curComponentReducer, { initialCurComponent } from '@/reducers/curComponentReducer'
+import { ComponentsContext } from '@/contexts';
+import { useComponent } from '@/hooks/useComponents'
+
 console.log(componentList)
 const { Header, Content, Sider } = Layout;
 
 export const Index = () => {
   const [curComponent, dispatch] = useReducer(curComponentReducer, initialCurComponent)
+  const { components, addComponent } = useComponent();
 
   return (
+    <ComponentsContext.Provider value={{components, setComponents: addComponent}}>
     <curComponentConText.Provider value={{ curComponent, dispatch }}>
       <Layout style={{ color: '#fff', height: '100vh' }}>
         <Header style={{ background: 'rgb(33, 37, 40)' }}><PageHeader /></Header>
@@ -31,6 +36,7 @@ export const Index = () => {
           </Sider>
         </Layout>
       </Layout>
-    </curComponentConText.Provider>
+      </curComponentConText.Provider>
+      </ComponentsContext.Provider>
   )
 }

@@ -1,5 +1,5 @@
 import { EditOutlined, CodepenOutlined } from '@ant-design/icons';
-import { ComponentNameEnum } from '@/componentConfig/enum'
+import { ComponentNameEnum } from '@/config'
 
 interface ComponentOption  {
   label: string;
