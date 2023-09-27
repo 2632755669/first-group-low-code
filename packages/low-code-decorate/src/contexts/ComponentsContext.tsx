@@ -1,14 +1,26 @@
 import { createContext } from 'react';
-import { IComponentComposeData } from '@/types';
+import { IComponentTree } from '@/types';
+import { ComponentNameEnum } from '@/enums'
+import { generateUUID } from '@/utils/generateUUID'
 
 interface IComponentsContext {
-  components: IComponentComposeData[];
+  componentTree: IComponentTree;
   setComponents(componentId: string, parentIds?: string[]): void;
+  selectedIds: string[];
+  setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+export const DEFAULT_COMPONENT_TREE = {
+  componentName: ComponentNameEnum.Root,
+  props: {},
+  id: generateUUID(),
+  parentIds: null,
+  children: []
 }
 
 export const ComponentsContext = createContext<IComponentsContext>({
-  components: [],
-  setComponents(componentId, parentIds) {
-    
-  }
+  componentTree: DEFAULT_COMPONENT_TREE,
+  selectedIds: [],
+  setComponents(componentId, parentIds) { },
+  setSelectedIds(v){}
 })

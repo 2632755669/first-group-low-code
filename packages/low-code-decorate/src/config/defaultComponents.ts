@@ -1,33 +1,14 @@
-import { Text } from '../baseComponent'
-import { DisplayContainer } from '../coreComponents'
-import { StaticTextSettingsForm } from './components'
-import { IComponentComposeData } from '@/types'
+import { IComponentTree } from '@/types/component'
+import { ComponentNameEnum } from '@/enums'
 
-export const defaultComponents: IComponentComposeData[] = [
-  {
-    title: 'flex布局',
-    component: DisplayContainer,
-    propertiesForm: StaticTextSettingsForm,
-    id: '1',
-    children: [
-      {
-        title: '文本',
-        component: Text,
-        propertiesForm: StaticTextSettingsForm,
-        id: '1.1',
-     },
-      {
-        title: '文本',
-        component: Text,
-        propertiesForm: StaticTextSettingsForm,
-        id: '1.2',
-     },
-      {
-        title: '文本',
-        component: Text,
-        propertiesForm: StaticTextSettingsForm,
-        id: '1.3',
-     },
-    ]
+export const defaultComponents: IComponentTree = {
+  componentName: ComponentNameEnum.DisplayContainer,
+  id: '123',
+  parentIds: null,
+  children: [
+
+  ],
+  props: {
+
   },
-]
+}

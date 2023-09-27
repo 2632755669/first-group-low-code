@@ -2,11 +2,13 @@ import { useContext } from 'react';
 import { ComponentsContext } from '@/contexts';
 
 export const useComponentContext = () => {
-  const { components, setComponents } = useContext(ComponentsContext);
+  const { componentTree, setComponents, selectedIds, setSelectedIds } = useContext(ComponentsContext);
 
   return {
-    components,
-    setComponents
+    componentTree,
+    setComponents,
+    selectedIds,
+    setSelectedIds
   }
 
 }

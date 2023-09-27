@@ -1,48 +1,55 @@
-import { IComponentComposeData } from "@/types"
+import { IComponentTree } from "@/types"
 import { useState } from "react"
-import { ALL_COMPONENTS, ComponentNameEnum } from '@/config/components';
-import { generateUUID } from '@/utils/generateUUID'
+import { getComponentInfo } from '@/config/components';
+import { DEFAULT_COMPONENT_TREE } from '@/contexts'
+import { ComponentNameEnum } from '@/enums'
 
 
 export const useComponent = () => {
-  const [components, setComponents] = useState<IComponentComposeData[]>([])
+  
+  const [componentTree, setComponents] = useState<IComponentTree>(DEFAULT_COMPONENT_TREE)
 
-  const findComponentPosition = (components: IComponentComposeData[], parentIds?: string[]): IComponentComposeData[] | null | undefined => {
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const findComponentPosition = (componentTree: IComponentTree, parentIds?: string[]): IComponentTree  => {
     if (!parentIds || !parentIds.length) {
-      return components
-    } else if (components.length) {
+      return componentTree
+    } else {
       const parentIdsClone = JSON.parse(JSON.stringify(parentIds))
       const id = parentIdsClone.shift();
-      const currentComponent = components.find(item => item.id === id);
+      const currentComponent = componentTree.children.find(item => item.id === id);
       if (currentComponent) {
-        if (!currentComponent.children) currentComponent.children = []
-        return findComponentPosition(currentComponent.children, parentIdsClone)
+        return findComponentPosition(currentComponent, parentIdsClone)
       }
-    } else {
-      return null
     }
+    return componentTree;
   }
 
   const addComponent = (componentId: ComponentNameEnum, parentIds?: string[]) => {
-    const uuid = generateUUID();
-    if (!parentIds) {
-      const currentComponents = findComponentPosition(components) || [];
-      currentComponents.push({...ALL_COMPONENTS[componentId], id: uuid})
-    } else if (parentIds.length) {
-      const currentComponents = findComponentPosition(components, parentIds) || [];
-      currentComponents.push({...ALL_COMPONENTS[componentId], id: uuid})
+    if (!parentIds?.length) {
+      const currentComponent = findComponentPosition(componentTree);
+      currentComponent.children.push(getComponentInfo(componentId, []))
+    } else {
+      const parentIdsClone = JSON.parse(JSON.stringify(parentIds))
+      parentIdsClone.shift()
+      const currentComponent = findComponentPosition(componentTree, parentIdsClone);
+      currentComponent.children.push(getComponentInfo(componentId, parentIds))
     }
-    setComponents([...components])
+    setComponents({...componentTree})
   }
+
   const removeComponent = (id: string, parentIds: string[]) => {
 
   }
+
   const moveComponent = (id: string, parentIds: string[], targetIds: string[]) => {
 
   }
 
   return {
-    components, 
+    selectedIds,
+    setSelectedIds, 
+    componentTree, 
     addComponent,
     removeComponent,
     moveComponent

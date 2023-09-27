@@ -1,20 +1,28 @@
-export interface IStaticTextSettingsForm {
+import type { ComponentNameEnum } from '@/enums'
+
+export interface IComponent {
+  componentName: ComponentNameEnum;
   title: string;
-  properties: Array<{
-    label: string;
-    value: string;
-    maxLength: number;
-    placeholder: string;
+  icon?: string;
+  group?: string;
+  properties?: Array<{
+    name: string;
+    propType: string;
+    description: string;
+    defaultValue: any;
   }>
+  [key: string]: any;
 }
 
-export interface IComponentData {
-  title: string;
-  component: React.FC<any>;
-  propertiesForm: IStaticTextSettingsForm;
-}
+export type IComponentMap = Record<ComponentNameEnum, IComponent>;
 
-export interface IComponentComposeData extends IComponentData {
+export type IComponentInstanceMap = Record<ComponentNameEnum, React.FC<any>>;
+
+export interface IComponentTree {
+  componentName: ComponentNameEnum;
+  props?: Record<string, any>;
   id: string;
-  children?: IComponentComposeData[]
+  parentIds: string[] | null;
+  children: IComponentTree[]
 }
+

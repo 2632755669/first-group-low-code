@@ -16,10 +16,10 @@ const { Header, Content, Sider } = Layout;
 
 export const Index = () => {
   const [curComponent, dispatch] = useReducer(curComponentReducer, initialCurComponent)
-  const { components, addComponent } = useComponent();
+  const { componentTree, addComponent, selectedIds, setSelectedIds } = useComponent();
 
   return (
-    <ComponentsContext.Provider value={{components, setComponents: addComponent}}>
+    <ComponentsContext.Provider value={{componentTree, setComponents: addComponent, selectedIds, setSelectedIds}}>
     <curComponentConText.Provider value={{ curComponent, dispatch }}>
       <Layout style={{ color: '#fff', height: '100vh' }}>
         <Header style={{ background: 'rgb(33, 37, 40)' }}><PageHeader /></Header>
