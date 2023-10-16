@@ -16,7 +16,7 @@ interface IProps {
 
 export const ModuleContainer = (props: IProps) => {
   const { children, activeId, onSelect, parentIds, id } = props;
-  const { setComponents, setSelectedIds } = useComponentContext();
+  const { addComponent, setSelectedIds } = useComponentContext();
 
   const isActive = useMemo(() => activeId === id, [activeId, id])
 
@@ -37,8 +37,8 @@ export const ModuleContainer = (props: IProps) => {
     e.stopPropagation()
     const componentName = e.dataTransfer.getData('componentid') as ComponentNameEnum
     if (!componentName) return
-    setComponents(componentName, parentIds);
-  }, [setComponents, parentIds])
+    addComponent(componentName, parentIds);
+  }, [addComponent, parentIds])
 
   const handleSelect: MouseEventHandler = useCallback((e) => {
     e.stopPropagation();

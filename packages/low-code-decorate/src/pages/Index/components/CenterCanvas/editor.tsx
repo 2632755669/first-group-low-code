@@ -65,7 +65,7 @@ interface IProps {
 }
 const CenterCanvas: FC<IProps> = ({ name }) => {
   const [activeId, setActiveId] = useState<React.Key>('');
-  const { componentTree, setComponents } = useComponentContext();
+  const { componentTree, addComponent } = useComponentContext();
   const editorRef = useRef(null);
 
   const defaultParentIds = useMemo(() => [], [])
@@ -80,7 +80,7 @@ const CenterCanvas: FC<IProps> = ({ name }) => {
     e.stopPropagation()
     const componentName = e.dataTransfer.getData('componentid') as ComponentNameEnum
     if (!componentName)  return
-    setComponents(componentName)
+    addComponent(componentName)
     const editorRect = document.getElementById('editor')!.getBoundingClientRect()
     const coordinate = {
       x: e.pageX - editorRect.left,
@@ -105,7 +105,10 @@ const CenterCanvas: FC<IProps> = ({ name }) => {
           <Button>预览</Button>
         </Space>
       </div>
-      <div id="editor" ref={editorRef} className="editor"
+      <div
+        id="editor"
+        ref={editorRef}
+        className="editor"
         onDrop={handleDrop}
         onDragOver={handleDragOver}>
         {/* 网格线 */}

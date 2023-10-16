@@ -5,21 +5,39 @@ import { LeftMenu } from './components/LeftMenu';
 import { RightProperty } from './components/RightProperty';
 import CenterCanvas from './components/CenterCanvas/editor';
 import { useReducer, } from 'react';
-import { componentList } from './load'
 import { curComponentConText } from '@/contexts/componentList'
 import curComponentReducer, { initialCurComponent } from '@/reducers/curComponentReducer'
 import { ComponentsContext } from '@/contexts';
 import { useComponent } from '@/hooks/useComponents'
 
-console.log(componentList)
 const { Header, Content, Sider } = Layout;
 
 export const Index = () => {
   const [curComponent, dispatch] = useReducer(curComponentReducer, initialCurComponent)
-  const { componentTree, addComponent, selectedIds, setSelectedIds } = useComponent();
+  const {
+    selectedIds,
+    component,
+    componentTree,
+    componentProps,
+    addComponent,
+    editComponentProps,
+    setSelectedIds,
+    componentFormSchema
+  } = useComponent();
 
   return (
-    <ComponentsContext.Provider value={{componentTree, setComponents: addComponent, selectedIds, setSelectedIds}}>
+    <ComponentsContext.Provider
+      value={{
+        componentTree,
+        component,
+        componentFormSchema,
+        addComponent,
+        componentProps,
+        editComponentProps,
+        selectedIds,
+        setSelectedIds
+      }}
+    >
     <curComponentConText.Provider value={{ curComponent, dispatch }}>
       <Layout style={{ color: '#fff', height: '100vh' }}>
         <Header style={{ background: 'rgb(33, 37, 40)' }}><PageHeader /></Header>

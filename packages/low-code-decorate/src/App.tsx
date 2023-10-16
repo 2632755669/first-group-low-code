@@ -3,7 +3,8 @@ import './App.less'
 
 import RoutesNode from './router/index'
 
-function App() {
+
+const App = () => {
   return (
     <BrowserRouter>
       <RoutesNode />

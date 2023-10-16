@@ -1,6 +1,6 @@
 import { Text } from '../baseComponent'
 import { DisplayContainer, RootContainer } from '../coreComponents'
-import { IComponentMap, IComponentInstanceMap, IComponentTree } from '@/types'
+import { IComponentMap, IComponentInstanceMap, IComponentTree, IComponentProps } from '@/types'
 import { generateUUID } from '@/utils/generateUUID'
  import { ComponentNameEnum } from '@/enums'
 
@@ -15,14 +15,7 @@ export const COMPONENT_MAP: IComponentMap = {
     componentName: ComponentNameEnum.Root,
     title: 'root',
     group: 'base',
-    properties: [
-      {
-        name: 'text',
-        propType: 'input',
-        description: '文本输入',
-        defaultValue: '文本'
-      }
-    ]
+    properties: []
   },
   [ComponentNameEnum.Text]: {
     componentName: ComponentNameEnum.Text,
@@ -30,9 +23,10 @@ export const COMPONENT_MAP: IComponentMap = {
     group: 'base',
     properties: [
       {
-        name: 'text',
-        propType: 'input',
-        description: '文本输入',
+        key: 'text',
+        title: 'text',
+        type: 'input',
+        property: {},
         defaultValue: '文本'
       }
     ]
@@ -43,9 +37,10 @@ export const COMPONENT_MAP: IComponentMap = {
     group: 'container',
     properties: [
       {
-        name: 'width',
-        propType: 'input',
-        description: '宽',
+        key: 'width',
+        title: 'width',
+        type: 'input',
+        property: {},
         defaultValue: '300'
       }
     ]
@@ -54,9 +49,9 @@ export const COMPONENT_MAP: IComponentMap = {
 
 export const getComponentInfo = (componentName: ComponentNameEnum, parentIds: string[]): IComponentTree => {
   const props = COMPONENT_MAP[componentName].properties?.reduce((pre, item) => {
-    pre[item.name] = item.defaultValue
+    pre[item.key] = item.defaultValue
     return pre
-  }, {} as Record<string, any>)
+  }, {} as IComponentProps)
   return {
     componentName,
     props,

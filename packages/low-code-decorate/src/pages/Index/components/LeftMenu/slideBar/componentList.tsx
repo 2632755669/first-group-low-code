@@ -1,10 +1,9 @@
 
 import { useRef, useCallback, useMemo } from 'react';
-import {ComponentGroupList} from '@/enums'
-import {componentList} from '@/pages/Index/load'
 import { Menu, type MenuProps } from 'antd'
 import { componentOptions } from '../data'
 import { useDrag } from 'ahooks'
+
 type MenuItem = Required<MenuProps>['items'][number]
 
 interface IMenuItemDragLabelProps {
