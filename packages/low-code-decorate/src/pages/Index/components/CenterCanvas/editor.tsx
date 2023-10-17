@@ -22,10 +22,6 @@ const ModuleComponent = (props: IModuleComponentProps) => {
   const childParentIds = useMemo(() => [...parentIds, data.id], [parentIds, data])
   const ChildComponent = COMPONENT_INSTACE_MAP[data.componentName]
 
-  useEffect(() => {
-    console.log(parentIds,'oarentIds')
-  }, [parentIds])
-
   const childComponentRender = (
     <ChildComponent {...data.props} >
     {

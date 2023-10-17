@@ -1,11 +1,13 @@
 import './index.less';
 
 interface IProps {
-  id: string
+  text: string;
 }
 
+const DEFAULT_TEXT = '文本';
+
 export const Text = (props: IProps) => {
-  const { id } = props
-  return <div className='mapCons'>静态文本</div>
+  const { text = DEFAULT_TEXT } = props
+  return <div className='mapCons'>{ text }</div>
 }
 export default Text

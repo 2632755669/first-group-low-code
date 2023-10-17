@@ -37,7 +37,7 @@ export const PropsForm = () => {
         fields.map(item => {
           const FieldItem = formItemMap[item.type]
           return (
-            <Form.Item label={item.title} name={item.key}>
+            <Form.Item label={item.title} name={item.key} key={item.key}>
               <FieldItem { ...item.property } />
             </Form.Item>
           )
