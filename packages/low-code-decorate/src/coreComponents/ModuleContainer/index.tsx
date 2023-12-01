@@ -1,7 +1,7 @@
 import { useMemo, useCallback, useRef, MouseEventHandler } from 'react'
 import classnames from 'classnames'
 import { useDrop } from 'ahooks'
-import { useComponentContext } from '@/hooks'
+import { useComponentContext, useResize } from '@/hooks'
 import { ComponentNameEnum } from '@/enums'
 
 import './index.less'
@@ -16,11 +16,15 @@ interface IProps {
 
 export const ModuleContainer = (props: IProps) => {
   const { children, activeId, onSelect, parentIds, id } = props;
-  const { addComponent, setSelectedIds } = useComponentContext();
+  const { addComponent, setSelectedIds, selectedIds } = useComponentContext();
 
-  const isActive = useMemo(() => activeId === id, [activeId, id])
+  const isActive = useMemo(() => {
+    return activeId === id || selectedIds[selectedIds.length - 1];
+  }, [activeId, id, selectedIds]);
 
   const moduleRef = useRef(null);
+
+  useResize(moduleRef);
 
   const className = classnames({
     'module-border': true,
@@ -58,7 +62,6 @@ export const ModuleContainer = (props: IProps) => {
   const handleSelected: MouseEventHandler = useCallback((e) => {
     setSelectedIds([...parentIds, id])
   }, [parentIds, id, setSelectedIds])
-
 
 
   return (

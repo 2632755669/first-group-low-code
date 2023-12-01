@@ -4,16 +4,12 @@ import PageHeader from '../../components/PageHeader';
 import { LeftMenu } from './components/LeftMenu';
 import { RightProperty } from './components/RightProperty';
 import CenterCanvas from './components/CenterCanvas/editor';
-import { useReducer, } from 'react';
-import { curComponentConText } from '@/contexts/componentList'
-import curComponentReducer, { initialCurComponent } from '@/reducers/curComponentReducer'
 import { ComponentsContext } from '@/contexts';
 import { useComponent } from '@/hooks/useComponents'
 
 const { Header, Content, Sider } = Layout;
 
 export const Index = () => {
-  const [curComponent, dispatch] = useReducer(curComponentReducer, initialCurComponent)
   const {
     selectedIds,
     component,
@@ -38,10 +34,8 @@ export const Index = () => {
         setSelectedIds
       }}
     >
-    <curComponentConText.Provider value={{ curComponent, dispatch }}>
       <Layout style={{ color: '#fff', height: '100vh' }}>
         <Header style={{ background: 'rgb(33, 37, 40)' }}><PageHeader /></Header>
-
         <Layout style={{ height: 'calc(100% - 80px)' }}>
           <Sider collapsible width={200} style={{ background: 'rgb(33, 37, 40)' }}>
             <LeftMenu></LeftMenu>
@@ -54,7 +48,6 @@ export const Index = () => {
           </Sider>
         </Layout>
       </Layout>
-      </curComponentConText.Provider>
       </ComponentsContext.Provider>
   )
 }
